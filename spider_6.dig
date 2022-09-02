@@ -7239,6 +7239,34 @@
       </elementAttributes>
       <pos x="-1740" y="-1380"/>
     </visualElement>
+    <visualElement>
+      <elementName>Text</elementName>
+      <elementAttributes>
+        <entry>
+          <string>textFontSize</string>
+          <int>36</int>
+        </entry>
+        <entry>
+          <string>Description</string>
+          <string>Memory Read Register</string>
+        </entry>
+      </elementAttributes>
+      <pos x="-1260" y="-2340"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Text</elementName>
+      <elementAttributes>
+        <entry>
+          <string>textFontSize</string>
+          <int>36</int>
+        </entry>
+        <entry>
+          <string>Description</string>
+          <string>Memory Write Register</string>
+        </entry>
+      </elementAttributes>
+      <pos x="1680" y="-1700"/>
+    </visualElement>
   </visualElements>
   <wires>
     <wire>
