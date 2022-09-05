@@ -1,12 +1,12 @@
-# SPIder
-A bit serial CPU architecture aimed at SPI applications
+# SPIder  - A bit serial CPU architecture aimed at SPI applications
+
 
 
 This is a 16-bit experimental cpu, based on a bit serial architecture.
 
 It is based on shift registers for local data storage, and implementation of the Program Counter.
 
-The bit-serial approach reduced the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
+The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
 SPIder is a work in progress and is updated regularly. It uses about 36 simple "TTL" logic packages, plus a couple of 32Kx8 RAMS and a 64Kx16 ROM.
 
