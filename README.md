@@ -15,12 +15,19 @@ The bit serial architecture processes data 1-bit at a time. For a 16-bit additio
 The architecture is based on shift registers, which for practical purposes are made from pairs of 8-bit shift registers. There are up to 8-registers available:
 
 Accumulator     A
+
 General Purpose X
+
 General Purpose Y
+
 Program Counter PC
+
 Memory Read     R
+
 Memory Write    W
+
 (Switch) Input  I
+
 Output          O
 
 
