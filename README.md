@@ -10,6 +10,21 @@ The bit-serial approach reduced the amount of logic required to create a cpu - b
 
 SPIder is a work in progress and is updated regularly. It uses about 36 simple "TTL" logic packages, plus a couple of 32Kx8 RAMS and a 64Kx16 ROM.
 
+The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. With modern 74HC logic which will clock at up to 20MHz, a 16-bit addition will be around 1uS - which puts it on par with a 1970's minicomputer such as the PDP-11 or Data General Nova machines.
+
+The architecture is based on shift registers, which for practical purposes are made from pairs of 8-bit shift registers. There are up to 8-registers available:
+
+Accumulator     A
+General Purpose X
+General Purpose Y
+Program Counter PC
+Memory Read     R
+Memory Write    W
+(Switch) Input  I
+Output          O
+
+
+
 Here are some development notes from the last week:
 
 1. The clock pulse sequencer is absolutely key to the operation of a bit serial CPU. It co-ordinates all operations of data transfer between registers. Think of it as a very simple Finite State Machine. Fortunately it is just a 4-bit counter, a couple of 7400 NANDS and half a 7474 Flipflop.
