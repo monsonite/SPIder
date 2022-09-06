@@ -9,7 +9,37 @@ It is based on shift registers for local data storage, and implementation of the
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
-SPIder is a work in progress and is updated regularly. It uses about 36 simple "TTL" logic packages, plus a couple of 32Kx8 RAMS and a 64Kx16 ROM.
+SPIder is a work in progress and is updated regularly. 
+
+spider_1.dig is a very simple testbed of the bit serial ALU, an accumulator and a second register B that can be manually loaded from push switches. The instruction is loaded from 3-bit inputs on the extreme left hand side.
+Further buttons at the bottom allow the machine to be reset and the "instruction" single stepped.
+
+Provision has been made for just 8 instructions, but only the ALU operations have been implemented:
+
+LOAD
+
+AND
+
+OR
+
+XOR
+
+ADD
+
+SUB
+
+STORE
+
+JUMP 
+
+The instruction is decoded with a 74HC138 and drives a simple diode matrix that decodes the instruction into various control signals, buffered in an octal inverter driver 74HC540.
+
+The clock sequencer is central to the design, it produces a train of 16-clock pulses every time the STEP button is pressed. This co-ordinates the loading and transfer of data between the registers.
+
+
+In later versions, RAM and an instruction ROM have been added with further registers to allow the memory areas to be accessed.
+
+It uses about 36 simple "TTL" logic packages, plus a couple of 32Kx8 RAMS and a 64Kx16 ROM.
 
 The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. With modern 74HC logic which will clock at up to 20MHz, a 16-bit addition will be around 1uS - which puts it on par with a 1970's minicomputer such as the PDP-11 or Data General Nova machines.
 
