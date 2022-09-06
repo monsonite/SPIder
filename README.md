@@ -11,7 +11,11 @@ The bit-serial approach reduces the amount of logic required to create a cpu - b
 
 SPIder is a work in progress and is updated regularly. 
 
-spider_0.dig is a very simple testbed.
+
+![image](https://user-images.githubusercontent.com/758847/188667922-aea5d08e-be8b-450a-8275-8db593b5229b.png)
+
+
+spider_0.dig is a very simple testbed for bit serial architectures.
 
 It consists of the bit serial ALU, an accumulator and a second register B that can be manually loaded from push switches. An output register consisting of a pair of 74HC595 shift registers, latches the accumulator data at the end of the 16 clock sequence, when it is stable.
 
