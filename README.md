@@ -13,7 +13,7 @@ SPIder is a work in progress and is updated regularly. It uses about 36 simple "
 
 The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. With modern 74HC logic which will clock at up to 20MHz, a 16-bit addition will be around 1uS - which puts it on par with a 1970's minicomputer such as the PDP-11 or Data General Nova machines.
 
-The architecture is based on shift registers, which for practical purposes are made from pairs of 8-bit shift registers. There are up to 8-registers available:
+The architecture is based on 16-bit wide shift registers, which for practical purposes are made from pairs of 8-bit shift registers. There are up to 8-registers available:
 
 Accumulator     A
 
@@ -31,7 +31,9 @@ Memory Write    W
 
 Output          O
 
+The instruction set was inspired by that of the RCA 1802 microprocessor. 
 
+The upper nybble defines the op-code and the lower nybble defines the registers to be used. As the program memory is 16-bits wide, the lower byte is used to hold a "payload" byte, which might be a numerical constant, an address or any other 8-bit data.
 
 Here are some development notes from the last week:
 
@@ -45,7 +47,7 @@ Here are some development notes from the last week:
 4. The PC was implemented as a pair of shift registers with half adder and MUX logic to either increment or reload the PC when a jump occurs.
 
 
-5. As much as I tried to get this to work with 8-bit wide RAM, the control logic rapidly mushroomed. I decided to add another  8-bid wide RAM chip, and remove all the difficult control logic.
+5. As much as I tried to get this to work with 8-bit wide RAM, the control logic rapidly mushroomed. I decided to add another 8-bit wide RAM chip, and remove all the difficult control logic.
 
 
 6. The RAM has a write-register and a read-register. It was simpler to implement these separately, but the functionality  could possibly be replaced using a pair of 74HC299 universal 8-bit, tri-state shift registers.
