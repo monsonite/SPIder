@@ -1,4 +1,4 @@
-# SPIder  - A bit serial CPU architecture aimed at SPI applications
+# SPIder  - A bit serial CPU architecture for SPI applications
 
 ![image](https://user-images.githubusercontent.com/758847/188650636-fdc11766-0a49-4bdf-bf45-97cc86549949.png)
 
