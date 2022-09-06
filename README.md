@@ -82,7 +82,7 @@ The upper nybble defines the op-code and the lower nybble defines the registers 
 
 Here are some development notes from the last week:
 
-1. The clock pulse sequencer is absolutely key to the operation of a bit serial CPU. It co-ordinates all operations of data transfer between registers. Think of it as a very simple Finite State Machine. Fortunately it is just a 4-bit counter, a couple of 7400 NANDS and half a 7474 Flipflop.
+1. The clock pulse sequencer is absolutely key to the operation of a bit serial CPU. It co-ordinates all operations of data transfer between registers. Think of it as a very simple Finite State Machine. Fortunately it is just a 4-bit counter, a 7400 quad NAND and half a 7474 dual flipflop.
  
 2. The bit-serial ALU is also quite compact, a 7486 quad XOR, 3 7400 NANDs and the other half of the 7474 dual flipflop.
 
