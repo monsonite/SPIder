@@ -12,6 +12,9 @@ The bit-serial approach reduces the amount of logic required to create a cpu - b
 SPIder is a work in progress and is updated regularly. 
 
 
+First Steps spider_0
+
+
 ![image](https://user-images.githubusercontent.com/758847/188667922-aea5d08e-be8b-450a-8275-8db593b5229b.png)
 
 
