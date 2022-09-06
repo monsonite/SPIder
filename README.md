@@ -11,8 +11,18 @@ The bit-serial approach reduces the amount of logic required to create a cpu - b
 
 SPIder is a work in progress and is updated regularly. 
 
-spider_1.dig is a very simple testbed of the bit serial ALU, an accumulator and a second register B that can be manually loaded from push switches. The instruction is loaded from 3-bit inputs on the extreme left hand side.
+spider_0.dig is a very simple testbed.
+
+It consists of the bit serial ALU, an accumulator and a second register B that can be manually loaded from push switches. An output register consisting of a pair of 74HC595 shift registers, latches the accumulator data at the end of the 16 clock sequence, when it is stable.
+
+spider_0 was used to test out the bit serial ALU, the clock sequencer and the three different types of shift register that are anticipated in the final design.
+
+The instruction is loaded from 3-bit inputs on the extreme left hand side.
 Further buttons at the bottom allow the machine to be reset and the "instruction" single stepped.
+
+The instruction is decoded with a 74HC138 and drives a simple diode matrix that decodes the instruction into various control signals, buffered in an octal inverter driver 74HC540.
+
+The clock sequencer is central to the design, it produces a train of 16-clock pulses every time the STEP button is pressed. This co-ordinates the loading and transfer of data between the registers.
 
 Provision has been made for just 8 instructions, but only the ALU operations have been implemented:
 
@@ -32,9 +42,10 @@ STORE
 
 JUMP 
 
-The instruction is decoded with a 74HC138 and drives a simple diode matrix that decodes the instruction into various control signals, buffered in an octal inverter driver 74HC540.
+spider_0 is just 15 commonly available 74HC logic devices, available in either 14-pin or 16-pin DIL packages.
 
-The clock sequencer is central to the design, it produces a train of 16-clock pulses every time the STEP button is pressed. This co-ordinates the loading and transfer of data between the registers.
+
+
 
 
 In later versions, RAM and an instruction ROM have been added with further registers to allow the memory areas to be accessed.
