@@ -20,36 +20,39 @@ SPIder is a work in progress and is updated regularly.
 
 spider_0.dig is a very simple testbed for bit serial architectures.
 
-It consists of the bit serial ALU, an accumulator and a second register B that can be manually loaded from push switches. An output register consisting of a pair of 74HC595 shift registers, latches the accumulator data at the end of the 16 clock sequence, when it is stable.
+It consists of the bit serial ALU, an Accumulator A, and a second register B that can be manually loaded from push switches. Data loaded into register B from the switches will be transferred into the Accumulator A when a LOAD operation (000) is performed.
 
-spider_0 was used to test out the bit serial ALU, the clock sequencer and the three different types of shift register that are anticipated in the final design.
+
+An output register consisting of a pair of 74HC595 shift registers, latches the accumulator data at the end of the 16 clock sequence, when it is stable.
+
+Spider_0 was used to test out the bit serial ALU, the clock sequencer and the three different types of shift register that are anticipated in the final design.
 
 The instruction is loaded from 3-bit inputs on the extreme left hand side.
 Further buttons at the bottom allow the machine to be reset and the "instruction" single stepped.
 
 The instruction is decoded with a 74HC138 and drives a simple diode matrix that decodes the instruction into various control signals, buffered in an octal inverter driver 74HC540.
 
-The clock sequencer is central to the design, it produces a train of 16-clock pulses every time the STEP button is pressed. This co-ordinates the loading and transfer of data between the registers.
+The clock sequencer is central to the design, it produces a train of 16-clock pulses every time the STEP button is pressed. This co-ordinates the loading and transfer of data between the registers and passing it bit by bit through the ALU.
 
 Provision has been made for just 8 instructions, but only the ALU operations have been implemented:
 
-LOAD
+LOAD  000
 
-AND
+AND   001
 
-OR
+OR    010
 
-XOR
+XOR   011
 
-ADD
+ADD   100
 
-SUB
+SUB   101
 
-STORE
+STORE 110
 
-JUMP 
+JUMP  111
 
-spider_0 is just 15 commonly available 74HC logic devices, available in either 14-pin or 16-pin DIL packages.
+Spider_0 is just 15 commonly available 74HC logic devices, available in either 14-pin or 16-pin DIL packages.
 
 
 # Bit Serial ALU.
@@ -77,7 +80,7 @@ We use the D-type flip-flop, U23 to save any carry from one bit calculation to t
 
 
 
-# spider007
+# Spider 007
 
 ![image](https://user-images.githubusercontent.com/758847/204773411-82b1d942-a50d-4466-8530-4b5a729846ac.png)
 
@@ -87,12 +90,27 @@ In this latest version, RAM and an instruction ROM have been added with further 
 
 It uses about 32 simple "TTL" logic packages, plus a couple of 62256 32Kx8 RAMS and a 27C1024 64Kx16 ROM.
 
+Spider 007 extends the basic Spider_0 by adding an instruction ROM and data RAM. Instructions are currently executed out of the ROM. There are sufficient instructions working to LOAD the Accumulator, perform arithmetic operations using constants from ROM and perform branch operations from within the same 256 word page of ROM.
 
-The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. A further 8 clock timing pulses are added to the beginning of the gated clock burst. These are decoded to provide additional signals for memory access, conditional branching etc.
+Further improvements will include:
+
+
+Conditional Branching
+
+RAM access
+
+Improved "Front Panel" for debugging
+
+
+
+
+
 
 # Clock Sequencer and Timing Pulse Generator
 
 ![image](https://user-images.githubusercontent.com/758847/204774964-04135a08-7949-4a98-a31a-6f07d2ae9e5a.png)
+
+The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. A further 8 clock timing pulses are added to the beginning of the gated clock burst. These are decoded to provide additional signals for memory access, conditional branching etc.
 
 
 The clock sequencer is based around a pair of 74HC161 4-bit binary counters with asynchronous clear U19 and U20. These are configured to form a 5 bit counter. Outputs Q3 and Q4 are combined in NAND U28A to reset the counter on reaching a count of 24. U21 is a 3 to 8 line decoder which generates active low timing pulses TP0 to TP7 for the first 8 clock cycles of the sequence. 
