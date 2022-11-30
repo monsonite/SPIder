@@ -12,7 +12,7 @@ The bit-serial approach reduces the amount of logic required to create a cpu - b
 SPIder is a work in progress and is updated regularly. 
 
 
-First Steps spider_0
+# First Steps spider_0
 
 
 ![image](https://user-images.githubusercontent.com/758847/188667922-aea5d08e-be8b-450a-8275-8db593b5229b.png)
@@ -50,6 +50,30 @@ STORE
 JUMP 
 
 spider_0 is just 15 commonly available 74HC logic devices, available in either 14-pin or 16-pin DIL packages.
+
+
+# Bit Serial ALU.
+
+![image](https://user-images.githubusercontent.com/758847/204771604-b7a924fe-3975-4223-a82a-f1c7a81aff71.png)
+
+A bit serial ALU performs 1-bit arithmetic or logic operations on the serial data streams emerging from the A and B registers. To perform a 16-bit addition, you need a gated burst of 16 clock cycles, I call this GCLK, (Gated Clock).
+
+
+The bit serial ALU evolved from a simple full adder, to include subtraction, negation and then the usual logic functions AND, OR and XOR.
+Referring to the schematic below, the complete ALU is implemented in just 5 chips. A quad XOR, three quad NANDs and a D-type flipflop. The gated clock, the A and B shift registers and the ALU control signals are generated elsewhere.
+
+
+The serial output of the A and B shift registers (Aout, Bout) are first presented to XOR gates U24A and U24B. This allows the bit streams to be inverted by setting the /A and /B inputs high. This allows subtraction, both A-B and B-A to be calculated, as well as !A and !B and a wide variety of the inverted logic functions, such as NAND, NOR and XNOR.
+
+
+U24C and U25C form a half adder to produce the half sum of A and B.  U24D and U25D form a second half adder, which adds in any carry, from Cin, to the sum of A and B.  NAND U25B combines any partial carries into a final carry signal.
+
+
+However we wish to perform logic functions as well. We know already that U24C is forming the XOR of A and B. Similarly U25C follopwed by U25B is forming the AND of A and B. So we use U26A, U26B and U26D as a two input multiplexer to choose between the AND and XOR functions. This is done using the multiplexer select inputs I0 and I1. From this multiplexer you can also get A OR B, (with I0=1, I1=1) and zero (with I0=0 and I1=0).
+But, when doing a logic operation, we don't want any pesky inter-stage carries spoiling our output. Thus we have a couple of gates,  U26A and U25A to suppress the carry, by forcing it to zero, when a logical operation is selected.
+
+
+We use the D-type flip-flop, U23 to save any carry from one bit calculation to the next, so that it can be fed back in for the next clock cycle.  Finally we use U27 to do a bit of housekeeping on the carry. It either sets or clears the carry flip-flop, just prior to processing bit zero of the calculation.
 
 
 
