@@ -24,7 +24,7 @@ Spider_0.dig is a very simple testbed for the bit serial ALU, input and output s
 Spider 0 consists of the bit serial ALU, an Accumulator A, and a second register B that can be manually loaded from push switches. Data loaded into register B from the switches will be transferred into the Accumulator A when a LOAD operation (000) is performed.
 
 
-Spider 0  is not much more than a simple adding machine! 
+Spider 0 is not much more than a simple adding machine, but provides an easy to understand tutorial on bit serial ALU architecture, before becoming further complicated with ROM, RAM and other parallel memory interfaces.
 
 
 It can perform binary arithmetic ADDition, SUBtraction and logic operations on the contents of the Accumulator and the bus register B. A binary number entered on the switches will be loaded into B and transferred to the Accumulator A during the LOAD operation. Further data entered on the switches can be added to or subtracted from the Accumulator using the ADD (100) and SUB (101) instructions.
