@@ -77,58 +77,25 @@ We use the D-type flip-flop, U23 to save any carry from one bit calculation to t
 
 
 
+# spider007
+
+![image](https://user-images.githubusercontent.com/758847/204773411-82b1d942-a50d-4466-8530-4b5a729846ac.png)
 
 
-In later versions, RAM and an instruction ROM have been added with further registers to allow the memory areas to be accessed.
-
-It uses about 36 simple "TTL" logic packages, plus a couple of 32Kx8 RAMS and a 64Kx16 ROM.
-
-The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. With modern 74HC logic which will clock at up to 20MHz, a 16-bit addition will be around 1uS - which puts it on par with a 1970's minicomputer such as the PDP-11 or Data General Nova machines.
-
-The architecture is based on 16-bit wide shift registers, which for practical purposes are made from pairs of 8-bit shift registers. There are up to 8-registers available:
-
-Accumulator     A
-
-General Purpose X
-
-General Purpose Y
-
-Program Counter PC
-
-Memory Read     R
-
-Memory Write    W
-
-(Switch) Input  I
-
-Output          O
-
-The instruction set was inspired by that of the RCA 1802 microprocessor. 
-
-The upper nybble defines the op-code and the lower nybble defines the registers to be used. As the program memory is 16-bits wide, the lower byte is used to hold a "payload" byte, which might be a numerical constant, an address or any other 8-bit data.
-
-Here are some development notes from the last week:
-
-1. The clock pulse sequencer is absolutely key to the operation of a bit serial CPU. It co-ordinates all operations of data transfer between registers. Think of it as a very simple Finite State Machine. Fortunately it is just a 4-bit counter, a 7400 quad NAND and half a 7474 dual flipflop.
- 
-2. The bit-serial ALU is also quite compact, a 7486 quad XOR, 3 7400 NANDs and the other half of the 7474 dual flipflop.
-
-3. All registers will consist of at least 2 shift register packages, as they are all 8-bit devices. A register needs to maintain current data or load new data. I found that a 2 input MUX (1 x 7400 package) at the input of the register was the best way to implement the load/recirculate logic.
+In this latest version, RAM and an instruction ROM have been added with further registers to allow the memory areas to be accessed.
 
 
-4. The PC was implemented as a pair of shift registers with half adder and MUX logic to either increment or reload the PC when a jump occurs.
+It uses about 32 simple "TTL" logic packages, plus a couple of 62256 32Kx8 RAMS and a 27C1024 64Kx16 ROM.
 
 
-5. As much as I tried to get this to work with 8-bit wide RAM, the control logic rapidly mushroomed. I decided to add another 8-bit wide RAM chip, and remove all the difficult control logic.
+The bit serial architecture processes data 1-bit at a time. For a 16-bit addition, 16 clock cycles will be required. A further 8 clock timing pulses are added to the beginning of the gated clock burst. These are decoded to provide additional signals for memory access, conditional branching etc.
+
+# Clock Sequencer and Timing Pulse Generator
+
+![image](https://user-images.githubusercontent.com/758847/204774964-04135a08-7949-4a98-a31a-6f07d2ae9e5a.png)
 
 
-6. The RAM has a write-register and a read-register. It was simpler to implement these separately, but the functionality  could possibly be replaced using a pair of 74HC299 universal 8-bit, tri-state shift registers.
+The clock sequencer is based around a pair of 74HC161 4-bit binary counters with asynchronous clear U19 and U20. These are configured to form a 5 bit counter. Outputs Q3 and Q4 are combined in NAND U28A to reset the counter on reaching a count of 24. U21 is a 3 to 8 line decoder which generates active low timing pulses TP0 to TP7 for the first 8 clock cycles of the sequence. 
 
+Further gates in U28 create a gating pulse that is active high for clock pulses 8 to 23. This pulse is used to generate a gated clock signal GCLK, consisting of a burst of 16 clock cycles, which drives the 16-bit shift registers in the CPU.
 
-7. Most instructions involve transferring data in a circular fashion between two selected registers. Think of this as similar to an SPI transfer. Consider a register that is loaded with a target subroutine address. As this target address is transferred to the Program Counter, the circular nature of the data transfer, causes the current address, the return address, to be transferred to the Subroutine register. So you have a return address mechanism that requires very little hardware.
-
- 
-8. I was hoping that this woud be a ROMless processor with all instructions and data coming from RAM. Experience with the "Digital" simulator has taught me that it is easier to test the system if you can execute program instructions from a ROM - even if it might be temporary. 
-
-
-9. With about 40 ICs, the same number as the Gigatron TTL Computer, this design performs 16-bit arithmetic in hardware, and is designed to interface to SPI peripherals.
