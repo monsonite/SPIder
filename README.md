@@ -5,11 +5,11 @@
 
 This is a 16-bit experimental cpu, based on a bit serial architecture.
 
-It is based on shift registers for local data storage, and implementation of the Program Counter.
+It is based on shift registers for local data storage, but conventional parallel ROM and RAM for program and data storage.
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
-SPIder is a work in progress and is updated regularly. 
+Spider is a work in progress and is updated regularly. 
 
 
 # First Steps spider_0
@@ -18,17 +18,28 @@ SPIder is a work in progress and is updated regularly.
 ![image](https://user-images.githubusercontent.com/758847/188667922-aea5d08e-be8b-450a-8275-8db593b5229b.png)
 
 
-spider_0.dig is a very simple testbed for bit serial architectures.
+Spider_0.dig is a very simple testbed for the bit serial ALU, input and output shift registers and clock pulse generator. It tests the data paths and the integrity of the ALU and carry operations.
 
-It consists of the bit serial ALU, an Accumulator A, and a second register B that can be manually loaded from push switches. Data loaded into register B from the switches will be transferred into the Accumulator A when a LOAD operation (000) is performed.
+
+Spider 0 consists of the bit serial ALU, an Accumulator A, and a second register B that can be manually loaded from push switches. Data loaded into register B from the switches will be transferred into the Accumulator A when a LOAD operation (000) is performed.
+
+
+Spider 0  is not much more than a simple adding machine! 
+
+
+It can perform binary arithmetic ADDition, SUBtraction and logic operations on the contents of the Accumulator and the bus register B. A binary number entered on the switches will be loaded into B and transferred to the Accumulator A during the LOAD operation. Further data entered on the switches can be added to or subtracted from the Accumulator using the ADD (100) and SUB (101) instructions.
 
 
 An output register consisting of a pair of 74HC595 shift registers, latches the accumulator data at the end of the 16 clock sequence, when it is stable.
 
+
 Spider_0 was used to test out the bit serial ALU, the clock sequencer and the three different types of shift register that are anticipated in the final design.
 
+
 The instruction is loaded from 3-bit inputs on the extreme left hand side.
-Further buttons at the bottom allow the machine to be reset and the "instruction" single stepped.
+
+
+Further buttons at the bottom allow the machine to be reset and the "instruction" single stepped. 
 
 The instruction is decoded with a 74HC138 and drives a simple diode matrix that decodes the instruction into various control signals, buffered in an octal inverter driver 74HC540.
 
