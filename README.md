@@ -90,7 +90,11 @@ In this latest version, RAM and an instruction ROM have been added with further 
 
 It uses about 32 simple "TTL" logic packages, plus a couple of 62256 32Kx8 RAMS and a 27C1024 64Kx16 ROM.
 
-Spider 007 extends the basic Spider_0 by adding an instruction ROM and data RAM. Instructions are currently executed out of the ROM. There are sufficient instructions working to LOAD the Accumulator, perform arithmetic operations using constants from ROM and perform branch operations from within the same 256 word page of ROM.
+Spider 007 extends the basic Spider_0 by adding an instruction ROM and data RAM. Instructions are currently executed out of the ROM. 
+
+
+There are sufficient instructions working to LOAD the Accumulator, perform arithmetic operations using constants from ROM and perform branch operations from within the same 256 word page of ROM.
+
 
 Further improvements will include:
 
