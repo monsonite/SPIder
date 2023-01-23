@@ -1,7 +1,7 @@
 # Introducing Spider - A bit serial CPU architecture for SPI applications
 
 
-This is a 16-bit experimental cpu, based on a bit serial architecture. It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial version of the PDP-8. The bit serial architecture used far fewer transistors than the PCP-8, but the compromise was that it was a lot slower, so was not a great commercial success. 
+This is a 16-bit experimental cpu, based on a bit serial architecture. It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial version of the PDP-8. The bit serial architecture used far fewer transistors than the PDP-8, but the compromise was that it was a lot slower, so it was not a great commercial success. 
 
 Whilst the PDP-8/S provided the initial inspiration to explore bit serial architectures, 50 years on, we now have much faster semiconductor memory and fast 74HCxx series logic. Spider is an exploration of a simple 16-bit bit serial machine with a much greater throughput than the old PDP-8/S. It is expected that it will run at 500,000 instructions per second.
 
@@ -17,13 +17,63 @@ More information on the PDP-8/S can be found from this 1967 Maintenance Manual
 https://bitsavers.org/pdf/dec/pdp8/pdp8s/PDP8S_MaintMan.pdf
 
 
-Another comparison of speed is the 1MHz MOS6502 from 1975. A 16-bit addition would take 20uS to perform. Spider should be 10 times faster than the 6502 and the 20 times faster than the PDP-8/S.
+Another comparison of speed is the 1MHz MOS6502 from 1975. A 16-bit addition would take 20uS to perform. Spider should be 10 times faster than the 6502 and 20 times faster than the PDP-8/S.
 
 
 Spider is based on shift registers for local data storage, but conventional parallel ROM and RAM for program and data storage.
 
+#Shift Registers.
+
+
+These are fascinating devices but not widely used these days. Several 8-bit types exist and they are characterised as generally being available in a 14 or 16 pin package, making them more compact than a typical, 20-pin, 8-bit parallel register.
+
+
+As data is sent serially, only 1 clock line and 1 or 2 data lines are needed to transfer data from 1 module to another. This keeps wiring and buses to a minimum.
+
+
+Four types are of interest, and are all used for different applications on the Spider testbed ALU.
+
+
+74HC164: An 8-bit serial input/output, parallel output device used as the Accumulator.  Has an asynchronous reset and a data inhibitor. Used for serial to parallel conversion. Comes in a compact 14-pin package. Can be clocked at up to 50MHz at 5V.
+
+
+74HC165: An 8-bit parallel load, serial output part in a 16-pin package. Used for parallel to serial conversion. Can be clocked at up to 50MHz at 5V. Used as the B (Bus) register.
+
+
+74HC595: An 8-bit serial input shift register with a latched, tristate parallel output, available in a 16-pin package. Useful for interfacing serial input devices to tristate memory buses.
+
+
+74HC299: A universal 8-bit shift register in a 20-pin package with a bidirectional 8-bit tristate, parallel bus. This allows it to be used for both input and output, and conversion to/from parallel/serial on a tristate memory bus. (saves using additional tristate buffers).
+
+
+4 modes of operation, hold, load, shift left, shift right. Can be clocked up to 25MHz at 5V.
+
+
+Shift registers offer a compact form of storage, with up to 32, 14/16 pin packages on a 100x100mm pcb. Register selection can be done with simple multiplexers such as 74HC153, or 74HC151. 
+
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
+
+
+Spider_0 is the test bed for the bit serial ALU.
+
+
+It has two 16-bit shift registers, A (Accumulator) and B (Bus). The contents of A and B are fed one bit at a time through the serial ALU, to produce the output function Fout and a possible carry Cout. The carry output is held in a D-type flip-flop so that it can be included in the next partial calculation. Fout is normally clocked back into the Accumulator A. 
+
+
+#Timing Pulse Generator & Clock Sequencer
+
+Central to the bit serial method is a timing pulse generator. This needs to produce one or more initialisation pulses, followed by 16 gates clock pulses, known as GCLK, followed by one or more termination pulses, for RAM writeback etc.
+
+
+The timing pulse generator is based around a 74HC161 4-bit counter, a S-R flip-flop (made from a 74HC00) and a D-type flip flop (half of a 74HC74). The gated clock signal GCLK is fed to all active shift registers so that they all move data in synchronisation.
+
+
+After some experimentation, it became clear that the system could be implemented from a few basic modules.  These would consist of DIL circuitry mounted on a 100x100mm pcb. Modules could be connected together using standard 6-pin cables, carrying clock, data, power and reset signals.
+
+
+An effort was made to reduce the design to just two basic pcbs, populated according to required functionality.
+
 
 Spider is a work in progress and is updated regularly. 
 
@@ -99,7 +149,7 @@ The serial output of the A and B shift registers (Aout, Bout) are first presente
 U24C and U25C form a half adder to produce the half sum of A and B.  U24D and U25D form a second half adder, which adds in any carry, from Cin, to the sum of A and B.  NAND U25B combines any partial carries into a final carry signal.
 
 
-However we wish to perform logic functions as well. We know already that U24C is forming the XOR of A and B. Similarly U25C follopwed by U25B is forming the AND of A and B. So we use U26A, U26B and U26D as a two input multiplexer to choose between the AND and XOR functions. This is done using the multiplexer select inputs I0 and I1. From this multiplexer you can also get A OR B, (with I0=1, I1=1) and zero (with I0=0 and I1=0).
+However we wish to perform logic functions as well. We know already that U24C is forming the XOR of A and B. Similarly U25C followed by U25B is forming the AND of A and B. So we use U26A, U26B and U26D as a two input multiplexer to choose between the AND and XOR functions. This is done using the multiplexer select inputs I0 and I1. From this multiplexer you can also get A OR B, (with I0=1, I1=1) and zero (with I0=0 and I1=0).
 But, when doing a logic operation, we don't want any pesky inter-stage carries spoiling our output. Thus we have a couple of gates,  U26A and U25A to suppress the carry, by forcing it to zero, when a logical operation is selected.
 
 
