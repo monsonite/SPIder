@@ -198,3 +198,9 @@ The clock sequencer is based around a pair of 74HC161 4-bit binary counters with
 
 Further gates in U28 create a gating pulse that is active high for clock pulses 8 to 23. This pulse is used to generate a gated clock signal GCLK, consisting of a burst of 16 clock cycles, which drives the 16-bit shift registers in the CPU.
 
+
+Update 25-01-2023.
+
+I have now ported most of the Spider design to a 160x100mm pcb. 
+
+![image](https://user-images.githubusercontent.com/758847/214454055-8c01c797-58f8-4204-a034-31a03097d5a2.png)
