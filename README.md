@@ -22,10 +22,41 @@ Another comparison of speed is the 1MHz MOS6502 from 1975. A 16-bit addition wou
 
 Spider is based on shift registers for local data storage, but conventional parallel ROM and RAM for program and data storage.
 
+SPIder is just one of a family of bit-serial CPUs based on the same 74HCxx devices:
+
+Tick - a minimal 4-bit machine
+Mite - an 8-bit machine with 32k bytes RAM
+SPIder - a 16 bit machine to explore external SPI peripherals and SPI memory and execute VM interpreted languages.
+Scorpion - a 32-bit machine building on the experience gained from Tick, Mite and Spider.
+
+In terms of hardware:
+
+Tick - about 10 ICs.
+Mite - about 16 ICs
+Spider - about 24 ICs
+Scorpion - no more than 40 ICs.
+
+Every CPU follows a similar sequence of events:
+
+FETCH an instruction from memory
+DECODE the instruction
+EXECUTE the instruction
+WRITE any data back to RAM or to external peripherals.
+
+The CPU will have a Clock Sequencer that controls the timing of all cycles and operations.
+
+It will initiate the FETCH of the instruction from memory.
+
+Combinational logic will DECODE and EXECUTE the instruction
+
+
+
 #Shift Registers.
 
 
-These are fascinating devices but not widely used these days. Several 8-bit types exist and they are characterised as generally being available in a 14 or 16 pin package, making them more compact than a typical, 20-pin, 8-bit parallel register.
+These are fascinating devices but not so widely used these days, partly because most processors need far more storage and secondly that most of the engineers who learned how to use shift register based storage are well into their retirement.
+
+Several 8-bit types exist and they are characterised as generally being available in a 14 or 16 pin package, making them more compact than a typical, 20-pin, 8-bit parallel register.
 
 
 As data is sent serially, only 1 clock line and 1 or 2 data lines are needed to transfer data from 1 module to another. This keeps wiring and buses to a minimum.
@@ -51,6 +82,7 @@ Four types are of interest, and are all used for different applications on the S
 
 Shift registers offer a compact form of storage, with up to 32, 14/16 pin packages on a 100x100mm pcb. Register selection can be done with simple multiplexers such as 74HC153, or 74HC151. 
 
+Larger shift registers are available. The 74HX14517 is a dual 64-bit register. It has 2 separate registers which have "taps" every 16-bits allowing it greater flexibility for serial storage applications. However being a CMOS device, it's maximum clock frequency is dependent on the supply voltage, and at 5V, it is typically around 5MHz.
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
