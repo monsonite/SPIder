@@ -1,7 +1,10 @@
 # Introducing Spider - A bit serial CPU architecture for SPI applications
 
 
-This is a 16-bit experimental cpu, based on a bit serial architecture. It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial version of the PDP-8. The bit serial architecture used far fewer transistors than the PDP-8, but the compromise was that it was a lot slower, so it was not a great commercial success. 
+This is a 16-bit experimental cpu, based on a bit serial architecture. It uses a few 74HCxx ICs and can easily be built on breadboard or stripboard.
+
+
+It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial version of the PDP-8. The bit serial architecture used far fewer transistors than the PDP-8, but the compromise was that it was a lot slower, so it was not a great commercial success. 
 
 Whilst the PDP-8/S provided the initial inspiration to explore bit serial architectures, 50 years on, we now have much faster semiconductor memory and fast 74HCxx series logic. Spider is an exploration of a simple 16-bit bit serial machine with a much greater throughput than the old PDP-8/S. It is expected that it will run at 500,000 instructions per second.
 
