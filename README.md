@@ -35,9 +35,40 @@ Scorpion - a 32-bit machine building on the experience gained from Tick, Mite an
 In terms of hardware:
 
 Tick - about 10 ICs.
+
 Mite - about 16 ICs
+
 Spider - about 24 ICs
+
 Scorpion - no more than 40 ICs.
+
+#The Serial Adder.
+
+In the late 1960s the Japanese started produced MOS ICs for the emerging electronic calculator industry.  These ICs were nicknamed JMOS.
+
+Key to calculation is a bit-serial adder. Toshiba produced the TM4006 - which was both an adder and subtractor and included the Carry flip-flop.
+
+![image](https://github.com/monsonite/SPIder/assets/758847/37bac4cc-1100-4ba8-8168-abe57ff033dd)
+
+It takes in two serial bit-streams from shift registers A and B, plus a Carry-In, and generates a Sum and Carry output.
+
+Bit streams A and B can be any length, 16-bits is a good compromise, the serial Adder/Subtractor does not get any more complex.
+
+The Adder consists of a full adder, but with an XOR gate that negates one of the inputs, allowing 2's complement subtraction to be performed.
+
+The Sum is A XOR B XOR Cin
+The Carry is A AND B AND Cin
+
+We can multiplex the Sum and Carry outputs to give us the logic functions ZERO,XOR, AND, OR.
+
+Using a mix of XOR and NAND plus a single D-type flipflop, the ALU can be reduced to just 5 ICs.
+
+![image](https://github.com/monsonite/SPIder/assets/758847/b28c3985-4ca2-49d5-88c2-19b8fbc5b963)
+
+
+
+
+
 
 Every CPU follows a similar sequence of events:
 
