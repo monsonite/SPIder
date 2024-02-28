@@ -48,7 +48,8 @@ In the late 1960s the Japanese started produced MOS ICs for the emerging electro
 
 Key to calculation is a bit-serial adder. Toshiba produced the TM4006 - which was both an adder and subtractor and included the Carry flip-flop.
 
-![image](https://github.com/monsonite/SPIder/assets/758847/37bac4cc-1100-4ba8-8168-abe57ff033dd)
+![image](https://github.com/monsonite/SPIder/assets/758847/ad724395-af48-4556-8eae-5f6ec2bbbf04)
+
 
 It takes in two serial bit-streams from shift registers A and B, plus a Carry-In, and generates a Sum and Carry output.
 
@@ -63,7 +64,8 @@ We can multiplex the Sum and Carry outputs to give us the logic functions ZERO,X
 
 Using a mix of XOR and NAND plus a single D-type flipflop, the ALU can be reduced to just 5 ICs.
 
-![image](https://github.com/monsonite/SPIder/assets/758847/b28c3985-4ca2-49d5-88c2-19b8fbc5b963)
+![image](https://github.com/monsonite/SPIder/assets/758847/2769d242-2314-4018-8ab9-d5fd922052c5)
+
 
 
 
