@@ -1,7 +1,10 @@
 # Introducing Spider - A bit serial CPU architecture for SPI applications
 
 
-This is a 16-bit experimental cpu, based on a bit serial architecture. It uses a few 74HCxx ICs and can easily be built on breadboard or stripboard.
+This is a 16-bit experimental cpu, based on a bit serial architecture.
+
+
+It uses a few 74HCxx ICs and can easily be built on breadboard or stripboard.
 
 
 It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial version of the PDP-8. The bit serial architecture used far fewer transistors than the PDP-8, but the compromise was that it was a lot slower, so it was not a great commercial success. 
@@ -27,16 +30,19 @@ Spider is based on shift registers for local data storage, but conventional para
 
 SPIder is just one of a family of bit-serial CPUs based on the same 74HCxx devices:
 
-Tick - a minimal 4-bit machine
+Tick - a minimal 4-bit machine, as a proof of concept.
 
 
-Mite - an 8-bit machine with 32k bytes RAM
+Mite - an 8-bit machine with 32k bytes RAM.
 
 
-SPIder - a 16 bit machine to explore external SPI peripherals and SPI memory and execute VM interpreted languages.
+SPIder - a 16 bit machine to explore external SPI peripherals and SPI memory and execute VM interpreted languages. Uses stacks and register files - made from large shift registers
 
 
 Scorpion - a 32-bit machine building on the experience gained from Tick, Mite and Spider.
+
+
+Fibo - a 32-bit variant designed to calculate the Fibonacci series
 
 In terms of hardware:
 
