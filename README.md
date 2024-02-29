@@ -42,7 +42,7 @@ Spider - about 24 ICs
 
 Scorpion - no more than 40 ICs.
 
-#The Serial Adder.
+# The Serial Adder.
 
 Serial arithmetic has been around since the earliest days of mechanical calculators, and was adapted to use the new technology of electromechanical (relay) computing and electronic computing, initially with vacuum tubes, then transistors and ultimately ICs. However in all cases the principles are the same.
 
@@ -134,13 +134,17 @@ Five types are of interest, and are all used for different applications on the S
 
 74HC299: A universal 8-bit shift register in a 20-pin package with a bidirectional 8-bit tristate, parallel bus. This allows it to be used for both input and output, and conversion to/from parallel/serial on a tristate memory bus. (saves using additional tristate buffers).
 
-
 4 modes of operation, hold, load, shift left, shift right. Can be clocked up to 25MHz at 5V.
-
 
 Shift registers offer a compact form of storage, with up to 32, 14/16 pin packages on a 100x100mm pcb. Register selection can be done with simple multiplexers such as 74HC153, or 74HC151. 
 
-Larger shift registers are available. The CD4517 (from TI or Onsemi) is a dual 64-bit register. It has 2 separate registers which have "taps" every 16-bits allowing it greater flexibility for serial storage applications. However being a CMOS device, it's maximum clock frequency is dependent on the supply voltage, and at 5V, it is typically around 5 to 6MHz.
+Larger shift registers are available. 
+
+The CD4517 (from TI or Onsemi) is a dual 64-bit register. It has 2 separate registers which have "taps" every 16-bits allowing it greater flexibility for serial storage applications. 
+
+However being a CMOS device, it's maximum clock frequency is dependent on the supply voltage, and at 5V, it is typically around 5 to 6MHz.
+
+The CD4517 can be used to provide an 8 level data stack or return stack, or is a cost effective way of providing a register bank of eight (or more), 16 bit registers.
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
@@ -151,7 +155,7 @@ The bit-serial approach reduces the amount of logic required to create a cpu - b
 It has two 16-bit shift registers, A (Accumulator) and B (Bus). The contents of A and B are fed one bit at a time through the serial ALU, to produce the output function Fout and a possible carry Cout. The carry output is held in a D-type flip-flop so that it can be included in the next partial calculation. Fout is normally clocked back into the Accumulator A. 
 
 
-#Timing Pulse Generator & Clock Sequencer
+# Timing Pulse Generator & Clock Sequencer
 
 Central to the bit serial method is a timing pulse generator. This needs to produce one or more initialisation pulses, followed by 16 gates clock pulses, known as GCLK, followed by one or more termination pulses, for RAM writeback etc.
 
