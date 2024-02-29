@@ -68,17 +68,31 @@ The Adder consists of a full adder, but with an XOR gate that negates one of the
 The Sum is A XOR B XOR Cin
 The Carry is A AND B AND Cin
 
-We can multiplex the Sum and Carry outputs to give us the logic functions ZERO,XOR, AND, OR.
+We can multiplex the Sum and Carry outputs to give us the logic functions ZERO, XOR, AND, OR.
 
-Using a mix of XOR and NAND plus a single D-type flipflop, the ALU can be reduced to just 5 ICs.
+Using a mix of XOR and NAND plus a single D-type flipflop, the ALU can be reduced to just 5 ICs. A practical example is shown in the image below - and has been widely used and simulated using H. Neeman's "Digital" simulator application.
+
+Note that any carry has to be made available at the "zeroth" timeslot when Bits A0 and B0 are being added together. Additional logic is required to preset or preclear the Carry during this timeslot.
 
 ![image](https://github.com/monsonite/SPIder/assets/758847/2769d242-2314-4018-8ab9-d5fd922052c5)
 
 
+# The Clock Sequencer.
+
+This lies at the heart of the bit-serial architechture. It generates a series of timing pulses and gated clock bursts that are used to synchronise all of the events during the instruction cycle.
+
+Essentially it consists of a 4-bit counter, a SR latch and a edge triggered D-type flip flop.
+
+For an 8-bit wordsize, timing pulses T0:T9 can be generated conveniently using a 74HC4017 decoded decade counter. For words greater than 8-bits, we need to use a shift register, with a continuously recirculating single high bit sometimes called "One Hot" ring counter.
+
+https://en.wikipedia.org/wiki/Ring_counter
+
+![image](https://github.com/monsonite/SPIder/assets/758847/b6255323-cc51-49f3-b092-3b2568f8e39e)
+
+![image](https://github.com/monsonite/SPIder/assets/758847/9ee7a9b4-cd4a-43d8-b593-60ec8ca7ff51)
 
 
-
-
+# The Bit-Serial CPU.
 
 Every CPU follows a similar sequence of events:
 
@@ -87,7 +101,7 @@ DECODE the instruction
 EXECUTE the instruction
 WRITE any data back to RAM or to external peripherals.
 
-The CPU will have a Clock Sequencer that controls the timing of all cycles and operations.
+The CPU will have a Clock Sequencer (above) that controls the timing of all cycles and operations.
 
 It will initiate the FETCH of the instruction from memory.
 
@@ -95,7 +109,7 @@ Combinational logic will DECODE and EXECUTE the instruction
 
 
 
-#Shift Registers.
+# Shift Registers.
 
 
 These are fascinating devices but not so widely used these days, partly because most processors need far more storage and secondly that most of the engineers who learned how to use shift register based storage are well into their retirement.
@@ -106,7 +120,7 @@ Several 8-bit types exist and they are characterised as generally being availabl
 As data is sent serially, only 1 clock line and 1 or 2 data lines are needed to transfer data from 1 module to another. This keeps wiring and buses to a minimum.
 
 
-Four types are of interest, and are all used for different applications on the Spider testbed ALU.
+Five types are of interest, and are all used for different applications on the Spider testbed ALU.
 
 
 74HC164: An 8-bit serial input/output, parallel output device used as the Accumulator.  Has an asynchronous reset and a data inhibitor. Used for serial to parallel conversion. Comes in a compact 14-pin package. Can be clocked at up to 50MHz at 5V.
@@ -126,12 +140,12 @@ Four types are of interest, and are all used for different applications on the S
 
 Shift registers offer a compact form of storage, with up to 32, 14/16 pin packages on a 100x100mm pcb. Register selection can be done with simple multiplexers such as 74HC153, or 74HC151. 
 
-Larger shift registers are available. The 74HX14517 is a dual 64-bit register. It has 2 separate registers which have "taps" every 16-bits allowing it greater flexibility for serial storage applications. However being a CMOS device, it's maximum clock frequency is dependent on the supply voltage, and at 5V, it is typically around 5MHz.
+Larger shift registers are available. The CD4517 (from TI or Onsemi) is a dual 64-bit register. It has 2 separate registers which have "taps" every 16-bits allowing it greater flexibility for serial storage applications. However being a CMOS device, it's maximum clock frequency is dependent on the supply voltage, and at 5V, it is typically around 5 to 6MHz.
 
 The bit-serial approach reduces the amount of logic required to create a cpu - but this comes at the expense of multiple clock cycles in order to perform the ALU operations.
 
 
-Spider_0 is the test bed for the bit serial ALU.
+# Spider_0 is the test bed for the bit serial ALU.
 
 
 It has two 16-bit shift registers, A (Accumulator) and B (Bus). The contents of A and B are fed one bit at a time through the serial ALU, to produce the output function Fout and a possible carry Cout. The carry output is held in a D-type flip-flop so that it can be included in the next partial calculation. Fout is normally clocked back into the Accumulator A. 
