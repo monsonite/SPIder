@@ -36,9 +36,12 @@ In terms of hardware:
 
 Tick - about 10 ICs.
 
+
 Mite - about 16 ICs
 
+
 Spider - about 24 ICs
+
 
 Scorpion - no more than 40 ICs.
 
