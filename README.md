@@ -1,4 +1,4 @@
-# Introducing Spider - A bit serial CPU architecture for SPI applications
+#  Spider - A bit serial CPU architecture for SPI applications
 
 
 This is a 16-bit experimental cpu, based on a bit serial architecture.
