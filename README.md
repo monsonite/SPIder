@@ -44,7 +44,15 @@ Scorpion - no more than 40 ICs.
 
 #The Serial Adder.
 
-In the late 1960s the Japanese started produced MOS ICs for the emerging electronic calculator industry.  These ICs were nicknamed JMOS.
+Serial arithmetic has been around since the earliest days of mechanical calculators, and was adapted to use the new technology of electromechanical (relay) computing and electronic computing, initially with vacuum tubes, then transistors and ultimately ICs. However in all cases the principles are the same.
+
+![image](https://github.com/monsonite/SPIder/assets/758847/55810c66-ff0b-4cb6-b2e4-193a88e5d945)
+
+A full adder (FA) is fed from two n-bit shift registers A and B commencing with their least significant bits. The state of any Carry, produced by the 1-bit addition, is held in a D-type flipflop and appears at the Carry In input to the full adder on the next bitwise addition.
+
+The bit-stream output of the full adder is recirculated into the A register or Accumulator, where it is retained at the end of the calculation.
+
+In the late 1960s the Japanese started produced arithmetic MOS ICs for the emerging electronic calculator industry.  These ICs were nicknamed JMOS.
 
 Key to calculation is a bit-serial adder. Toshiba produced the TM4006 - which was both an adder and subtractor and included the Carry flip-flop.
 
@@ -53,7 +61,7 @@ Key to calculation is a bit-serial adder. Toshiba produced the TM4006 - which wa
 
 It takes in two serial bit-streams from shift registers A and B, plus a Carry-In, and generates a Sum and Carry output.
 
-Bit streams A and B can be any length, 16-bits is a good compromise, the serial Adder/Subtractor does not get any more complex.
+Bit streams A and B can be any length, 16-bits is a good compromise, but regardless of wordlength, the serial Adder/Subtractor does not get any more complex. Only the input shift registers grow in length.
 
 The Adder consists of a full adder, but with an XOR gate that negates one of the inputs, allowing 2's complement subtraction to be performed.
 
