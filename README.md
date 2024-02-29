@@ -28,22 +28,29 @@ Spider is based on shift registers for local data storage, but conventional para
 SPIder is just one of a family of bit-serial CPUs based on the same 74HCxx devices:
 
 Tick - a minimal 4-bit machine
+
+
 Mite - an 8-bit machine with 32k bytes RAM
+
+
 SPIder - a 16 bit machine to explore external SPI peripherals and SPI memory and execute VM interpreted languages.
+
+
 Scorpion - a 32-bit machine building on the experience gained from Tick, Mite and Spider.
 
 In terms of hardware:
 
-Tick - about 10 ICs.
+Tick 4-bit - about 10 ICs.
 
 
-Mite - about 16 ICs
+Mite 8-bit - about 16 ICs
 
 
-Spider - about 24 ICs
+Spider 16-bit - about 24 ICs
 
 
-Scorpion - no more than 40 ICs.
+Scorpion 32-bit - no more than 40 ICs.
+
 
 # The Serial Adder.
 
