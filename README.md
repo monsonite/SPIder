@@ -12,17 +12,6 @@ It was inspired by the PDP-8/S from 1967 which was a cost reduced, bit serial ve
 Whilst the PDP-8/S provided the initial inspiration to explore bit serial architectures, 50 years on, we now have much faster semiconductor memory and fast 74HCxx series logic. Spider is an exploration of a simple 16-bit bit serial machine with a much greater throughput than the old PDP-8/S. It is expected that it will run at 500,000 instructions per second.
 
 
-The PDP-8/S required 10.5 uS to perform a 12-bit ALU operation. The core memory used had an access time of 6.5uS. But an instruction involving memory would require 2 memory cycles and two processor cycles, which equates to 34uS {29400 operations per second). Other instructions were even slower - according to the table below which is in microseconds. The PDP-8/S was a very slow machine!
-
-![image](https://user-images.githubusercontent.com/758847/204822364-0bd68acf-b9d8-4c72-ab29-335493fead7e.png)
-
-
-More information on the PDP-8/S can be found from this 1967 Maintenance Manual
-
-
-https://bitsavers.org/pdf/dec/pdp8/pdp8s/PDP8S_MaintMan.pdf
-
-
 Another comparison of speed is the 1MHz MOS6502 from 1975. A 16-bit addition would take 20uS to perform. Spider should be 10 times faster than the 6502 and 20 times faster than the PDP-8/S.
 
 
@@ -56,6 +45,10 @@ Spider 16-bit - about 24 ICs
 
 
 Scorpion 32-bit - no more than 40 ICs.
+
+With just 24 ICs SPIder can be built quite cheaply from readily available low cost 74HCxx ICs.  DIL or SMT may be used but the SMT version will ultimately me cheaper.
+
+The list of ICs and rough prices is included in the repo.
 
 
 # The Serial Adder.
