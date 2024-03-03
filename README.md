@@ -1,6 +1,10 @@
 #  Spider - A bit serial CPU architecture for SPI applications
 
 
+![image](https://github.com/monsonite/SPIder/assets/758847/7ae823a1-6674-41ab-bdf1-0e4e21f63dcb)
+
+
+
 This is a 16-bit experimental cpu, based on a bit serial architecture.
 
 
